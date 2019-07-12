@@ -66,7 +66,7 @@ $ git push
 ```
 
 ### DoD
-- Trainer see all the forks in github
+- Trainer sees all the forks in github
 - Trainer can locate every teammate by its team repo
 
 ---
@@ -636,7 +636,7 @@ assertMessageEquals("3")
 
 ---
 
-# JDBC API (6/2)
+# JDBC API* (6/2)
 - SQL recap: DDL and DML
 - DB schema design
 - Overview of JDBC API
@@ -659,7 +659,7 @@ assertMessageEquals("3")
 
 ---
 
-# Performance tuning and optimization in Java (3/1)
+# Performance tuning and optimization in Java* (3/1)
 - JVM monitoring tool JVisualVM
 - Heap structure
 - GC types
@@ -671,6 +671,12 @@ assertMessageEquals("3")
 
 ### DoD
 - Bottlenecks detected
+
+---
+
+# Backlog
+- Spring Core Intro*
+- Enterprise Application Architecture*
 
 ---
 
@@ -693,3 +699,6 @@ assertMessageEquals("3")
 - PM and Business Customers accept product with six demo sessions
 
 ---
+
+# Reading List
+- [Common reading](http://tinyurl.com/skilltrekreadinglist)
