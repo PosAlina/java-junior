@@ -35,16 +35,16 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //region then
         assertSysoutContains("primitive: ");
         String newLine = lineSeparator();
-        assertSysoutEquals("primitive: 1"+ newLine +"primitive: 0"+ newLine +"primitive: -1"+ newLine);
+        assertSysoutEquals("primitive: 1" + newLine + "primitive: 0" + newLine + "primitive: -1" + newLine);
         //endregion
     }
 
     @Test
     public void shouldLogByte() throws IOException {
         //region when
-        Logger.log((byte)1);
-        Logger.log((byte)0);
-        Logger.log((byte)-1);
+        Logger.log((byte) 1);
+        Logger.log((byte) 0);
+        Logger.log((byte) -1);
         //endregion
 
         //region then
@@ -97,9 +97,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
     }
 
-  //      TODO: implement Logger solution to match specification as tests    TODO: implement Logger solution to match specification as tests
-
- @Test
+    @Test
     public void shouldLogReference() throws IOException {
         //region when
         Logger.log(new Object());
