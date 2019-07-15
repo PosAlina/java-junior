@@ -2,21 +2,25 @@ package com.acme.edu;
 
 public class Logger {
 
-    private static void print(String message) {
+    private static void printToConsole(String message) {
         System.out.println(message);
     }
 
     public static void log(char message) {
-        print("char: " + message);
+        printToConsole("char: " + message);
     }
 
     public static void log(Object message) {
+        String typeName;
         if (message instanceof String) {
-            print("string: " + message);
+            typeName = "string: ";
         } else if (message instanceof Integer || message instanceof Byte || message instanceof Boolean) {
-            print("primitive: " + message);
+            typeName = "primitive: ";
+        } else if (message == null) {
+            typeName = "null: ";
         } else {
-            print("reference: " + message);
+            typeName = "reference: ";
         }
+        printToConsole(typeName + message);
     }
 }
