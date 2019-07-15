@@ -6,18 +6,6 @@ public class Logger {
         System.out.println(message);
     }
 
-    public static void log(int message) {
-        print("primitive: " + message);
-    }
-
-    public static void log(byte message) {
-        print("primitive: " + message);
-    }
-
-    public static void log(boolean message) {
-        print("primitive: " + message);
-    }
-
     public static void log(char message) {
         print("char: " + message);
     }
@@ -25,6 +13,8 @@ public class Logger {
     public static void log(Object message) {
         if (message instanceof String) {
             print("string: " + message);
+        } else if (message instanceof Integer || message instanceof Byte || message instanceof Boolean) {
+            print("primitive: " + message);
         } else {
             print("reference: " + message);
         }
