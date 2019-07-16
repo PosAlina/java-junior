@@ -5,6 +5,7 @@ public class Logger {
     private static final String PRIMITIVE_PREFIX = "primitive: ";
     private static final String CHAR_PREFIX = "char: ";
     private static final String REFERENCE_PREFIX = "reference: ";
+    private static final String INTARRAY_PREFIX = "primitives array: ";
 
     private enum states {
         NO_STATE,
@@ -23,6 +24,21 @@ public class Logger {
             return "null";
         }
         return prefix + message;
+    }
+
+    private static String decorate(int... message) {
+        if (message.length == 0) {
+            return INTARRAY_PREFIX + "{}";
+        }
+        StringBuilder decoratedMessage = new StringBuilder(INTARRAY_PREFIX);
+        decoratedMessage.append("{");
+        int index = 0;
+        while (index < message.length - 1) {
+            decoratedMessage.append(message[index]).append(", ");
+            index++;
+        }
+        decoratedMessage.append(message[index]).append("}");
+        return decoratedMessage.toString();
     }
 
     private static void save(String message) {
@@ -55,16 +71,6 @@ public class Logger {
         }
         state = states.NO_STATE;
     }
-
-    public static void log(String message) {
-        if ((!stateIsString()) || (!previousString.equals(message))) {
-            flush();
-            state = states.STRING_STATE;
-            previousString = message;
-        }
-        stringCounter++;
-    }
-
 
     public static void log(byte message) {
         int remainder = message;
@@ -113,8 +119,34 @@ public class Logger {
         save(decorate(CHAR_PREFIX, message));
     }
 
-    public static void log(Object message) {
+    private static void log(Object message) {
         flush();
         save(decorate(REFERENCE_PREFIX, message));
+    }
+
+    private static void log(String message) {
+        if ((!stateIsString()) || (!previousString.equals(message))) {
+            flush();
+            state = states.STRING_STATE;
+            previousString = message;
+        }
+        stringCounter++;
+    }
+
+    public static void log(int... message) {
+        flush();
+        save(decorate(message));
+    }
+
+    public static void log(Object... message) {
+        for (Object current : message) {
+            log(current);
+        }
+    }
+
+    public static void log(String... message) {
+        for (String current : message) {
+            log(current);
+        }
     }
 }
