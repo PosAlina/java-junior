@@ -61,7 +61,7 @@ $ git push
 ```
 
 ### DoD
-- Trainer see all the forks in github
+- Trainer sees all the forks in github
 - Trainer can locate every teammate by its team repo
 
 ---
@@ -694,3 +694,7 @@ assertMessageEquals("3")
 - PM and Business Customers accept product with six demo sessions
 
 ---
+
+# Reading List
+- [Common reading](http://tinyurl.com/skilltrekreadinglist)
+- [Инженерные практики, которые должен знать разработчик](https://paper.dropbox.com/doc/Delivery-Pipeline-ci-cd-devops-AhDDhbiM81S6VHUbx8qK1BfdAg-OBLCVRSkMek24U7IXIHbq)
