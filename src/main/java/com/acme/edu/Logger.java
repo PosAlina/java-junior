@@ -29,11 +29,23 @@ public class Logger {
         System.out.println(message);
     }
 
+    private static boolean stateIsInt() {
+        return state == states.INT_STATE;
+    }
+
+    private static boolean stateIsByte() {
+        return state == states.BYTE_STATE;
+    }
+
+    private static boolean stateIsString() {
+        return state == states.STRING_STATE;
+    }
+
     public static void flush() {
-        if ((state == states.INT_STATE) || (state == states.BYTE_STATE)) {
+        if (stateIsInt() || stateIsByte()) {
             save(decorate(PRIMITIVE_PREFIX, sum));
             sum = 0;
-        } else if (state == states.STRING_STATE) {
+        } else if (stateIsString()) {
             if (stringCounter > 1) {
                 previousString = previousString + " (x" + stringCounter + ")";
             }
@@ -43,7 +55,7 @@ public class Logger {
     }
 
     public static void log(String message) {
-        if (state != states.STRING_STATE || (!previousString.equals(message))) {
+        if ((!stateIsString()) || (!previousString.equals(message))) {
             flush();
             state = states.STRING_STATE;
             previousString = message;
@@ -53,7 +65,7 @@ public class Logger {
 
     public static void log(byte message) {
         int rest = message;
-        if (state != states.BYTE_STATE) {
+        if (!stateIsByte()) {
             flush();
             state = states.BYTE_STATE;
         } else {
@@ -72,7 +84,7 @@ public class Logger {
     }
 
     public static void log(int message) {
-        if (state != states.INT_STATE) {
+        if (!stateIsInt()) {
             flush();
             state = states.INT_STATE;
         } else {
