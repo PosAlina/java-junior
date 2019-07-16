@@ -51,6 +51,9 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 2");
         Logger.log(0);
         Logger.flush();
+        Logger.log(-10);
+        Logger.log(Integer.MIN_VALUE);
+        Logger.flush();
         //endregion
 
         //region then
@@ -59,6 +62,8 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("10");
         assertSysoutContains("str 2");
         assertSysoutContains("0");
+        assertSysoutContains(String.valueOf(Integer.MIN_VALUE));
+        assertSysoutContains("-10");
         //endregion
     }
 

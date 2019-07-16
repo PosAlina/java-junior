@@ -32,14 +32,12 @@ public class Logger {
         if ((state == states.INT_STATE) || (state == states.BYTE_STATE)) {
             save(decorate(PRIMITIVE_PREFIX, sum));
             sum = 0;
-            state = states.NO_STATE;
         } else if (state == states.STRING_STATE) {
             if (stringCounter > 1) {
                 previousString = previousString + " (x" + stringCounter + ")";
             }
             save(decorate(STRING_PREFIX, previousString));
             stringCounter = 0;
-            state = states.NO_STATE;
         }
     }
 
