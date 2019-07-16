@@ -51,7 +51,9 @@ public class Logger {
             }
             save(decorate(STRING_PREFIX, previousString));
             stringCounter = 0;
+            previousString = "";
         }
+        state = states.NO_STATE;
     }
 
     public static void log(String message) {
@@ -63,43 +65,41 @@ public class Logger {
         stringCounter++;
     }
 
+
     public static void log(byte message) {
-        int rest = message;
+        int remainder = message;
         if (!stateIsByte()) {
             flush();
-            state = states.BYTE_STATE;
         } else {
-            int intMessage = sum + message;
-            if (intMessage > Byte.MAX_VALUE) {
-                rest = rest + sum - Byte.MAX_VALUE;
+            if ((message > 0) && (sum > Byte.MAX_VALUE - message)) {
+                remainder = remainder - (Byte.MAX_VALUE - sum);
                 sum = Byte.MAX_VALUE;
                 flush();
-            } else if (intMessage < Byte.MIN_VALUE) {
-                rest = rest - Byte.MIN_VALUE + sum;
+            } else if ((message < 0) && (sum < Byte.MIN_VALUE - message)) {
+                remainder = remainder - (Byte.MIN_VALUE - sum);
                 sum = Byte.MIN_VALUE;
                 flush();
             }
         }
-        sum = sum + rest;
+        state = states.BYTE_STATE;
+        sum = sum + remainder;
     }
 
     public static void log(int message) {
         if (!stateIsInt()) {
             flush();
-            state = states.INT_STATE;
         } else {
-            long longMessage = sum;
-            longMessage = longMessage + message;
-            if (longMessage > Integer.MAX_VALUE) {
-                message = message + sum - Integer.MAX_VALUE;
+            if ((message > 0) && (sum > Integer.MAX_VALUE - message)) {
+                message = message - (Integer.MAX_VALUE - sum);
                 sum = Integer.MAX_VALUE;
                 flush();
-            } else if (longMessage < Integer.MIN_VALUE) {
-                message = message - Integer.MIN_VALUE + sum;
+            } else if ((message < 0) && (sum < Integer.MIN_VALUE - message)) {
+                message = message - (Integer.MIN_VALUE - sum);
                 sum = Integer.MIN_VALUE;
                 flush();
             }
         }
+        state = states.INT_STATE;
         sum = sum + message;
     }
 
