@@ -12,6 +12,7 @@ public class Logger {
         BYTE_STATE,
         STRING_STATE
     }
+
     private static states state = states.NO_STATE;
     private static int sum = 0;
     private static int stringCounter = 0;
@@ -51,16 +52,23 @@ public class Logger {
     }
 
     public static void log(byte message) {
+        int rest = message;
         if (state != states.BYTE_STATE) {
             flush();
             state = states.BYTE_STATE;
         } else {
             int intMessage = sum + message;
-            if ((intMessage > Byte.MAX_VALUE) || ((intMessage < Byte.MIN_VALUE))) {
+            if (intMessage > Byte.MAX_VALUE) {
+                rest = rest + sum - Byte.MAX_VALUE;
+                sum = Byte.MAX_VALUE;
+                flush();
+            } else if (intMessage < Byte.MIN_VALUE) {
+                rest = rest - Byte.MIN_VALUE + sum;
+                sum = Byte.MIN_VALUE;
                 flush();
             }
         }
-        sum = sum + message;
+        sum = sum + rest;
     }
 
     public static void log(int message) {
