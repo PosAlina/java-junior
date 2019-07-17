@@ -1,36 +1,44 @@
 package com.acme.edu;
 
 public class Logger {
-    private static final String STRING_PREFIX = "string: ";
-    private static final String PRIMITIVE_PREFIX = "primitive: ";
-    private static final String CHAR_PREFIX = "char: ";
-    private static final String REFERENCE_PREFIX = "reference: ";
-    private static final String INTARRAY_PREFIX = "primitives array: ";
+    private enum States {
+        NO_STATE(""),
+        INT_STATE("primitive: "),
+        BYTE_STATE("primitive: "),
+        BOOLEAN_STATE("primitive: "),
+        STRING_STATE("string: "),
+        CHAR_STATE("char: "),
+        REFERENCE_STATE("reference: "),
+        INTARRAY_STATE("primitives array: ");
 
-    private enum states {
-        NO_STATE,
-        INT_STATE,
-        BYTE_STATE,
-        STRING_STATE
+        private final String prefix;
+
+        States(String prefix) {
+            this.prefix = prefix;
+        }
+
+        String getPrefix() {
+            return prefix;
+        }
     }
 
-    private static states state = states.NO_STATE;
+    private static States state = States.NO_STATE;
     private static int sum = 0;
     private static int stringCounter = 0;
     private static String previousString = "";
 
-    private static String decorate(String prefix, Object message) {
+    private static String decorate(Object message) {
         if (message == null) {
             return "null";
         }
-        return prefix + message;
+        return state.getPrefix() + message;
     }
 
     private static String decorate(int... message) {
         if (message.length == 0) {
-            return INTARRAY_PREFIX + "{}";
+            return state.getPrefix() + "{}";
         }
-        StringBuilder decoratedMessage = new StringBuilder(INTARRAY_PREFIX);
+        StringBuilder decoratedMessage = new StringBuilder(state.getPrefix());
         decoratedMessage.append("{");
         int index = 0;
         while (index < message.length - 1) {
@@ -46,30 +54,30 @@ public class Logger {
     }
 
     private static boolean stateIsInt() {
-        return state == states.INT_STATE;
+        return state == States.INT_STATE;
     }
 
     private static boolean stateIsByte() {
-        return state == states.BYTE_STATE;
+        return state == States.BYTE_STATE;
     }
 
     private static boolean stateIsString() {
-        return state == states.STRING_STATE;
+        return state == States.STRING_STATE;
     }
 
     public static void flush() {
         if (stateIsInt() || stateIsByte()) {
-            save(decorate(PRIMITIVE_PREFIX, sum));
+            save(decorate(sum));
             sum = 0;
         } else if (stateIsString()) {
             if (stringCounter > 1) {
                 previousString = previousString + " (x" + stringCounter + ")";
             }
-            save(decorate(STRING_PREFIX, previousString));
+            save(decorate(previousString));
             stringCounter = 0;
             previousString = "";
         }
-        state = states.NO_STATE;
+        state = States.NO_STATE;
     }
 
     public static void log(byte message) {
@@ -87,7 +95,7 @@ public class Logger {
                 flush();
             }
         }
-        state = states.BYTE_STATE;
+        state = States.BYTE_STATE;
         sum = sum + remainder;
     }
 
@@ -105,29 +113,32 @@ public class Logger {
                 flush();
             }
         }
-        state = states.INT_STATE;
+        state = States.INT_STATE;
         sum = sum + message;
     }
 
     public static void log(boolean message) {
         flush();
-        save(decorate(PRIMITIVE_PREFIX, message));
+        state = States.BOOLEAN_STATE;
+        save(decorate(message));
     }
 
     public static void log(char message) {
         flush();
-        save(decorate(CHAR_PREFIX, message));
+        state = States.CHAR_STATE;
+        save(decorate(message));
     }
 
     private static void log(Object message) {
         flush();
-        save(decorate(REFERENCE_PREFIX, message));
+        state = States.REFERENCE_STATE;
+        save(decorate(message));
     }
 
     private static void log(String message) {
         if ((!stateIsString()) || (!previousString.equals(message))) {
             flush();
-            state = states.STRING_STATE;
+            state = States.STRING_STATE;
             previousString = message;
         }
         stringCounter++;
@@ -135,6 +146,7 @@ public class Logger {
 
     public static void log(int... message) {
         flush();
+        state = States.INTARRAY_STATE;
         save(decorate(message));
     }
 
