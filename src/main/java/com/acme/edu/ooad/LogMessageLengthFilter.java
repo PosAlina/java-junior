@@ -2,16 +2,17 @@ package com.acme.edu.ooad;
 
 import java.util.Objects;
 
-public class LogMessageLengthFilter {
+public class LogMessageLengthFilter implements LogFilter {
     private int maxMessageLength;
 
     public LogMessageLengthFilter(int maxMessageLength) {
         this.maxMessageLength = maxMessageLength;
     }
 
-    public boolean allow(String message) {
+    @Override
+    public boolean allow(Command message) {
         if(message == null) throw new IllegalArgumentException();
 
-        return message.length() <= maxMessageLength;
+        return message.getMessage().length() <= maxMessageLength;
     }
 }
