@@ -1,6 +1,13 @@
 package com.acme.edu;
 
 public class Logger {
+    private static LogController logController = new LogController(new ConsoleSaver());
+
+    private static States state = States.NO_STATE;
+    private static int sum = 0;
+    private static int stringCounter = 0;
+    private static String previousString = "";
+
     private enum States {
         NO_STATE(""),
         INT_STATE("primitive: "),
@@ -21,11 +28,6 @@ public class Logger {
             return prefix;
         }
     }
-
-    private static States state = States.NO_STATE;
-    private static int sum = 0;
-    private static int stringCounter = 0;
-    private static String previousString = "";
 
     private static String decorate(Object message) {
         if (message == null) {
@@ -49,10 +51,6 @@ public class Logger {
         return decoratedMessage.toString();
     }
 
-    private static void save(String message) {
-        System.out.println(message);
-    }
-
     private static boolean stateIsInt() {
         return state == States.INT_STATE;
     }
@@ -67,13 +65,13 @@ public class Logger {
 
     public static void flush() {
         if (stateIsInt() || stateIsByte()) {
-            save(decorate(sum));
+            logController.getSaver().save(decorate(sum));
             sum = 0;
         } else if (stateIsString()) {
             if (stringCounter > 1) {
                 previousString = previousString + " (x" + stringCounter + ")";
             }
-            save(decorate(previousString));
+            logController.getSaver().save(decorate(previousString));
             stringCounter = 0;
             previousString = "";
         }
@@ -120,19 +118,19 @@ public class Logger {
     public static void log(boolean message) {
         flush();
         state = States.BOOLEAN_STATE;
-        save(decorate(message));
+        logController.getSaver().save(decorate(message));
     }
 
     public static void log(char message) {
         flush();
         state = States.CHAR_STATE;
-        save(decorate(message));
+        logController.getSaver().save(decorate(message));
     }
 
     private static void log(Object message) {
         flush();
         state = States.REFERENCE_STATE;
-        save(decorate(message));
+        logController.getSaver().save(decorate(message));
     }
 
     private static void log(String message) {
@@ -147,7 +145,7 @@ public class Logger {
     public static void log(int... message) {
         flush();
         state = States.INTARRAY_STATE;
-        save(decorate(message));
+        logController.getSaver().save(decorate(message));
     }
 
     public static void log(Object... message) {
