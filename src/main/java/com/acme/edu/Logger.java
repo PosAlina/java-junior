@@ -64,16 +64,22 @@ public class Logger {
     }
 
     public static void flush() {
-        if (stateIsInt() || stateIsByte()) {
-            logController.getSaver().save(decorate(sum));
-            sum = 0;
-        } else if (stateIsString()) {
-            if (stringCounter > 1) {
-                previousString = previousString + " (x" + stringCounter + ")";
+        switch (state) {
+            case INT_STATE:
+            case BYTE_STATE: {
+                logController.getSaver().save(decorate(sum));
+                sum = 0;
+                break;
             }
-            logController.getSaver().save(decorate(previousString));
-            stringCounter = 0;
-            previousString = "";
+            case STRING_STATE: {
+                if (stringCounter > 1) {
+                    previousString = previousString + " (x" + stringCounter + ")";
+                }
+                logController.getSaver().save(decorate(previousString));
+                stringCounter = 0;
+                previousString = "";
+                break;
+            }
         }
         state = States.NO_STATE;
     }
