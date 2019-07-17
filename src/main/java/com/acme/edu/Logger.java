@@ -148,7 +148,7 @@ public class Logger {
         stringCounter++;
     }
 
-    public static void log(int... message) {
+    public static void log(int[] message) {
         flush();
         state = States.INTARRAY_STATE;
         logController.getSaver().save(decorate(message));
