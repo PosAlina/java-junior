@@ -17,15 +17,7 @@ public class LogController {
             return;
         }
         accumulatedCommand.process(currentCommand, saver);
-        if (accumulatedCommand.isToBeSaved) {
-            update(currentCommand);
-        }
-    }
-
-    private void update(Command currentCommand) {
-        if (accumulatedCommand.isToFixOverflow) {
-            accumulatedCommand.update();
-        } else {
+        if (accumulatedCommand.isToBeSaved && !accumulatedCommand.isToFixOverflow) {
             accumulatedCommand = currentCommand;
         }
     }

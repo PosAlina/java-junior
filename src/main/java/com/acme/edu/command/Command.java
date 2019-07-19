@@ -47,15 +47,15 @@ public class Command {
         isToBeSaved = true;
     }
 
-    public void update() {
-        isToBeSaved = false;
-        isToFixOverflow = false;
-    }
+    public void update() {}
 
     public void process(Command currentCommand, Saver saver) {
         accumulate(currentCommand);
         if (isToBeSaved) {
             saver.save(decorate());
+            if (isToFixOverflow) {
+                update();
+            }
         }
     }
 }
