@@ -43,6 +43,25 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
+    public void shouldLogSequentBytesAsSum() throws IOException {
+        //region when
+        Logger.log("str 1");
+        Logger.log((byte) 1);
+        Logger.log((byte) 2);
+        Logger.log("str 2");
+        Logger.log((byte) 0);
+        Logger.flush();
+        //endregion
+
+        //region then
+        assertSysoutContains("str 1");
+        assertSysoutContains("3");
+        assertSysoutContains("str 2");
+        assertSysoutContains("0");
+        //endregion
+    }
+
+    @Test
     public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() {
         //region when
         Logger.log("str 1");
@@ -76,6 +95,9 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 2");
         Logger.log(0);
         Logger.flush();
+        Logger.log((byte) -10);
+        Logger.log(Byte.MIN_VALUE);
+        Logger.flush();
         //endregion
 
         //region then
@@ -84,6 +106,8 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("10");
         assertSysoutContains("str 2");
         assertSysoutContains("0");
+        assertSysoutContains(String.valueOf(Byte.MIN_VALUE));
+        assertSysoutContains("-10");
         //endregion
     }
 
