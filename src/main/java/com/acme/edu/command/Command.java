@@ -1,5 +1,7 @@
 package com.acme.edu.command;
 
+import com.acme.edu.saver.Saver;
+
 public class Command {
     public enum States {
         NO_STATE(""),
@@ -48,6 +50,13 @@ public class Command {
     public void update() {
         isToBeSaved = false;
         isToFixOverflow = false;
+    }
+
+    public void process(Command currentCommand, Saver saver) {
+        accumulate(currentCommand);
+        if (isToBeSaved) {
+            saver.save(decorate());
+        }
     }
 }
 

@@ -16,9 +16,8 @@ public class LogController {
             accumulatedCommand = currentCommand;
             return;
         }
-        accumulatedCommand.accumulate(currentCommand);
+        accumulatedCommand.process(currentCommand, saver);
         if (accumulatedCommand.isToBeSaved) {
-            saver.save(accumulatedCommand.decorate());
             update(currentCommand);
         }
     }
