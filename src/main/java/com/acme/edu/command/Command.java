@@ -3,7 +3,7 @@ package com.acme.edu.command;
 import com.acme.edu.saver.Saver;
 
 public class Command {
-    public enum States {
+    protected enum States {
         NO_STATE(""),
         INT_STATE("primitive: "),
         BYTE_STATE("primitive: "),
@@ -20,18 +20,18 @@ public class Command {
             this.prefix = prefix;
         }
 
-        public String getPrefix() {
+        protected String getPrefix() {
             return prefix;
         }
     }
 
     protected States state;
-    public boolean isToBeSaved;
-    public boolean isToFixOverflow;
+    protected boolean isToBeSaved;
+    protected boolean isToFixOverflow;
 
     public Command() {
-        isToBeSaved = false;
-        isToFixOverflow = false;
+        this.isToBeSaved = false;
+        this.isToFixOverflow = false;
         this.state = States.NO_STATE;
     }
 
@@ -48,6 +48,10 @@ public class Command {
     }
 
     public void update() {}
+
+    public boolean isCompletelyProcessed() {
+        return isToBeSaved && !isToFixOverflow;
+    }
 
     public void process(Command currentCommand, Saver saver) {
         accumulate(currentCommand);

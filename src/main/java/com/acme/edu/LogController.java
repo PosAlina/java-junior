@@ -9,6 +9,7 @@ public class LogController {
 
     public LogController(Saver saver) {
         this.saver = saver;
+        this.accumulatedCommand = null;
     }
 
     public void log(Command currentCommand) {
@@ -17,7 +18,7 @@ public class LogController {
             return;
         }
         accumulatedCommand.process(currentCommand, saver);
-        if (accumulatedCommand.isToBeSaved && !accumulatedCommand.isToFixOverflow) {
+        if (accumulatedCommand.isCompletelyProcessed()) {
             accumulatedCommand = currentCommand;
         }
     }
