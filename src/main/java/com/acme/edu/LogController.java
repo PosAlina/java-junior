@@ -4,7 +4,7 @@ import com.acme.edu.command.Command;
 import com.acme.edu.saver.Saver;
 
 public class LogController {
-    private static Command accumulatedCommand;
+    private Command accumulatedCommand;
     private Saver saver;
 
     public LogController(Saver saver) {
