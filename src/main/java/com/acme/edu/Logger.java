@@ -51,6 +51,6 @@ public class Logger {
     }
 
     public static void flush() {
-        logController.flush();
+        logController.log(null);
     }
 }
