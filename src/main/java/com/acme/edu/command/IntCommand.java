@@ -4,27 +4,9 @@ public class IntCommand extends Command {
     private int message;
     private int overflowRest = 0;
 
-    public IntCommand(int message){
+    public IntCommand(int message) {
         this.message = message;
         this.state = States.INT_STATE;
-    }
-
-    public int getMessage() {
-        return message;
-    }
-
-    private boolean checkOverflow(int secondMessage) {
-        if ((secondMessage > 0) && (message > Integer.MAX_VALUE - secondMessage)) {
-            overflowRest = secondMessage - (Integer.MAX_VALUE - message);
-            message = Integer.MAX_VALUE;
-            return true;
-        } else if ((secondMessage < 0) && (message < Integer.MIN_VALUE - secondMessage)) {
-            overflowRest = secondMessage - (Integer.MIN_VALUE - message);
-            message = Integer.MIN_VALUE;
-            return true;
-        }
-        overflowRest = 0;
-        return false;
     }
 
     @Override
@@ -36,14 +18,14 @@ public class IntCommand extends Command {
     }
 
     @Override
-    public String getStringMessage() {
+    public String getMessageAsString() {
         return String.valueOf(message);
     }
 
     @Override
     public void accumulate(Command secondCommand) {
         if (secondCommand instanceof IntCommand) {
-            isToFixOverflow = checkOverflow(((IntCommand) secondCommand).getMessage());
+            isToFixOverflow = detectedOverflow(((IntCommand) secondCommand).getMessage());
             isToBeSaved = isToFixOverflow;
             if (!isToFixOverflow) {
                 message = message + ((IntCommand) secondCommand).getMessage();
@@ -51,5 +33,33 @@ public class IntCommand extends Command {
         } else {
             isToBeSaved = true;
         }
+    }
+
+    public int getMessage() {
+        return message;
+    }
+
+    private boolean detectedOverflow(int secondMessage) {
+        if (isPositiveOverflow(secondMessage)) {
+            return processOverflow(secondMessage, Integer.MAX_VALUE);
+        } else if (isNegativeOverflow(secondMessage)) {
+            return processOverflow(secondMessage, Integer.MIN_VALUE);
+        }
+        overflowRest = 0;
+        return false;
+    }
+
+    private boolean processOverflow(int secondMessage, int overflowValue) {
+        overflowRest = secondMessage - (overflowValue - message);
+        message = overflowValue;
+        return true;
+    }
+
+    private boolean isPositiveOverflow(int secondMessage) {
+        return (secondMessage > 0) && (message > Integer.MAX_VALUE - secondMessage);
+    }
+
+    private boolean isNegativeOverflow(int secondMessage) {
+        return (secondMessage < 0) && (message < Integer.MIN_VALUE - secondMessage);
     }
 }

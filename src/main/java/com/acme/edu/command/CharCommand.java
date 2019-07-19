@@ -9,12 +9,7 @@ public class CharCommand extends Command{
     }
 
     @Override
-    public String getStringMessage() {
+    public String getMessageAsString() {
         return String.valueOf(message);
-    }
-
-    @Override
-    public void accumulate(Command secondCommand) {
-        isToBeSaved = true;
     }
 }

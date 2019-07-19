@@ -2,7 +2,7 @@ package com.acme.edu.command;
 
 import java.util.Objects;
 
-public class StringCommand extends Command{
+public class StringCommand extends Command {
     private String message;
     private int stringCounter = 1;
 
@@ -11,26 +11,27 @@ public class StringCommand extends Command{
         this.state = States.STRING_STATE;
     }
 
+    @Override
+    public void accumulate(Command secondCommand) {
+        isToBeSaved = !isEqualStringCommand(secondCommand);
+        if (!isToBeSaved) {
+            stringCounter++;
+        }
+    }
+
+    @Override
+    public String getMessageAsString() {
+        if (stringCounter > 1) {
+            return message + " (x" + stringCounter + ")";
+        }
+        return message;
+    }
+
     public String getMessage() {
         return message;
     }
 
-    @Override
-    public void accumulate(Command secondCommand) {
-        if (secondCommand instanceof StringCommand && Objects.equals(message, ((StringCommand)secondCommand).getMessage())) {
-            stringCounter++;
-            isToBeSaved = false;
-        } else {
-            isToBeSaved = true;
-        }
-    }
-
-    @Override
-    public String getStringMessage() {
-        StringBuilder newMessage = new StringBuilder(message);
-        if (stringCounter > 1) {
-           newMessage.append(" (x" + stringCounter + ")");
-        }
-        return newMessage.toString();
+    private boolean isEqualStringCommand(Command secondCommand) {
+        return secondCommand instanceof StringCommand && Objects.equals(message, ((StringCommand) secondCommand).getMessage());
     }
 }

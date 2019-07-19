@@ -9,7 +9,8 @@ public class Command {
         STRING_STATE("string: "),
         CHAR_STATE("char: "),
         REFERENCE_STATE("reference: "),
-        INTARRAY_STATE("primitives array: ");
+        INTARRAY_STATE("primitives array: "),
+        INTMATRIX_STATE("primitives matrix: ");
 
         private final String prefix;
 
@@ -20,11 +21,8 @@ public class Command {
         public String getPrefix() {
             return prefix;
         }
-
-        public static boolean canBeAccumulated(States state) {
-            return state == INT_STATE || state == BYTE_STATE || state == STRING_STATE;
-        }
     }
+
     protected States state;
     public boolean isToBeSaved;
     public boolean isToFixOverflow;
@@ -35,23 +33,16 @@ public class Command {
         this.state = States.NO_STATE;
     }
 
-    public String getStringMessage() {
+    public String getMessageAsString() {
         return "";
     }
 
     public String decorate() {
-        if ("".equals(getStringMessage())) {
-            return "null";
-        }
-        return state.getPrefix() + getStringMessage();
+        return state.getPrefix() + getMessageAsString();
     }
 
     public void accumulate(Command command) {
         isToBeSaved = true;
-    }
-
-    public boolean isNoCommand() {
-        return state == States.NO_STATE;
     }
 
     public void update() {

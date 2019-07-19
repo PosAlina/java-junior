@@ -1,6 +1,6 @@
 package com.acme.edu.command;
 
-public class IntArrayCommand extends Command{
+public class IntArrayCommand extends Command {
     private int[] message;
 
     public IntArrayCommand(int[] message) {
@@ -9,12 +9,11 @@ public class IntArrayCommand extends Command{
     }
 
     @Override
-    public String decorate() {
+    public String getMessageAsString() {
         if (message.length == 0) {
-            return state.getPrefix() + "{}";
+            return "{}";
         }
-        StringBuilder decoratedMessage = new StringBuilder(state.getPrefix());
-        decoratedMessage.append("{");
+        StringBuilder decoratedMessage = new StringBuilder("{");
         int index = 0;
         while (index < message.length - 1) {
             decoratedMessage.append(message[index]).append(", ");
@@ -22,10 +21,5 @@ public class IntArrayCommand extends Command{
         }
         decoratedMessage.append(message[index]).append("}");
         return decoratedMessage.toString();
-    }
-
-    @Override
-    public void accumulate(Command secondCommand) {
-        isToBeSaved = true;
     }
 }

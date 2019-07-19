@@ -9,26 +9,8 @@ public class ByteCommand extends Command {
         this.state = States.BYTE_STATE;
     }
 
-    public int getMessage() {
-        return message;
-    }
-
-    private boolean checkOverflow(int secondMessage) {
-        if ((secondMessage > 0) && (message > Byte.MAX_VALUE - secondMessage)) {
-            overflowRest = secondMessage - (Byte.MAX_VALUE - message);
-            message = Byte.MAX_VALUE;
-            return true;
-        } else if ((secondMessage < 0) && (message < Byte.MIN_VALUE - secondMessage)) {
-            overflowRest = secondMessage - (Byte.MIN_VALUE - message);
-            message = Byte.MIN_VALUE;
-            return true;
-        }
-        overflowRest = 0;
-        return false;
-    }
-
     @Override
-    public String getStringMessage() {
+    public String getMessageAsString() {
         return String.valueOf(message);
     }
 
@@ -51,5 +33,33 @@ public class ByteCommand extends Command {
         } else {
             isToBeSaved = true;
         }
+    }
+
+    public int getMessage() {
+        return message;
+    }
+
+    private boolean checkOverflow(int secondMessage) {
+        if (isPositiveOverflow(secondMessage)) {
+            return processOverflow(secondMessage, Byte.MAX_VALUE);
+        } else if (isNegativeOverflow(secondMessage)) {
+            return processOverflow(secondMessage, Byte.MIN_VALUE);
+        }
+        overflowRest = 0;
+        return false;
+    }
+
+    private boolean processOverflow(int secondMessage, int overflowValue) {
+        overflowRest = secondMessage - (overflowValue - message);
+        message = overflowValue;
+        return true;
+    }
+
+    private boolean isPositiveOverflow(int secondMessage) {
+        return (secondMessage > 0) && (message > Byte.MAX_VALUE - secondMessage);
+    }
+
+    private boolean isNegativeOverflow(int secondMessage) {
+        return (secondMessage < 0) && (message < Byte.MIN_VALUE - secondMessage);
     }
 }

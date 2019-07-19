@@ -1,6 +1,7 @@
 package com.acme.edu;
 
 import com.acme.edu.command.*;
+import com.acme.edu.saver.ConsoleSaver;
 
 public class Logger {
     private static LogController logController = new LogController(new ConsoleSaver());
@@ -31,6 +32,10 @@ public class Logger {
 
     public static void log(int[] message) {
         logController.log(new IntArrayCommand(message));
+    }
+
+    public static void log(int[][] message) {
+        logController.log(new IntMatrixCommand(message));
     }
 
     public static void log(Object... message) {
