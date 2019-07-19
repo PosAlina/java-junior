@@ -22,12 +22,6 @@ public class LogController {
         }
     }
 
-    public void flush() {
-        if (accumulatedCommand == null) return;
-        saver.save(accumulatedCommand.decorate());
-        accumulatedCommand = null;
-    }
-
     private void update(Command currentCommand) {
         if (accumulatedCommand.isToFixOverflow) {
             accumulatedCommand.update();
