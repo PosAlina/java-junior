@@ -31,6 +31,10 @@ public class StringCommand extends Command {
         return message;
     }
 
+    public int getStringCounter() {
+        return stringCounter;
+    }
+
     private boolean isEqualStringCommand(Command secondCommand) {
         return secondCommand instanceof StringCommand && Objects.equals(message, ((StringCommand) secondCommand).getMessage());
     }

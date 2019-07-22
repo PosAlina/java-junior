@@ -36,6 +36,14 @@ public class Command {
         this.state = States.NO_STATE;
     }
 
+    public boolean isToBeSaved() {
+        return isToBeSaved;
+    }
+
+    public boolean isToFixOverflow() {
+        return isToFixOverflow;
+    }
+
     public String getMessageAsString() {
         return "";
     }
@@ -51,7 +59,7 @@ public class Command {
     public void update() {}
 
     public boolean isCompletelyProcessed() {
-        return isToBeSaved && !isToFixOverflow;
+        return isToBeSaved;
     }
 
     public void process(Command currentCommand, Saver saver) {

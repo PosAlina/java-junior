@@ -9,13 +9,13 @@ public class IntMatrixCommand extends Command {
     }
 
     @Override
-    public String decorate() {
+    public String getMessageAsString() {
         String newLine = System.lineSeparator();
         if (message.length == 0) {
-            return state.getPrefix() + "{}";
+            return "{}";
         }
-        StringBuilder decoratedMessage = new StringBuilder(state.getPrefix());
-        decoratedMessage.append("{").append(newLine);
+        StringBuilder decoratedMessage = new StringBuilder("{");
+        decoratedMessage.append(newLine);
         for (int[] line : message) {
             decoratedMessage.append(arrayProcess(line));
             decoratedMessage.append(newLine);
