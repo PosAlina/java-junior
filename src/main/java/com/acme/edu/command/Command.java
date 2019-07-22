@@ -12,7 +12,8 @@ public class Command {
         CHAR_STATE("char: "),
         REFERENCE_STATE("reference: "),
         INTARRAY_STATE("primitives array: "),
-        INTMATRIX_STATE("primitives matrix: ");
+        INTMATRIX_STATE("primitives matrix: "),
+        INTMULTIMATRIX_STATE("primitives multimatrix: ");
 
         private final String prefix;
 

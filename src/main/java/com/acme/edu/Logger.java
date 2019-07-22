@@ -6,7 +6,9 @@ import com.acme.edu.saver.ConsoleSaver;
 public class Logger {
     private static LogController logController = new LogController(new ConsoleSaver());
 
-    public static void log(byte message) { logController.log(new ByteCommand(message)); }
+    public static void log(byte message) {
+        logController.log(new ByteCommand(message));
+    }
 
     public static void log(int message) {
         logController.log(new IntCommand(message));
@@ -21,7 +23,11 @@ public class Logger {
     }
 
     private static void log(Object message) {
-        logController.log(new ObjectCommand(message));
+        if (message instanceof Integer) {
+            logController.log(new IntCommand((Integer)message));
+        } else {
+            logController.log(new ObjectCommand(message));
+        }
     }
 
     private static void log(String message) {
@@ -37,8 +43,12 @@ public class Logger {
     }
 
     public static void log(Object... message) {
-        for (Object current : message) {
-            log(current);
+        if (message instanceof Object[][]) {
+            logController.log(new IntMultiMatrixCommand(message));
+        } else {
+            for (Object current : message) {
+                log(current);
+            }
         }
     }
 
