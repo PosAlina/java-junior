@@ -4,8 +4,9 @@ import java.io.File;
 
 public class Logger {
     //Field DI
-    private final LogFilter filter;
+    private final LogFilter filter; //IS-A
     private final LogSaver saver;
+    private Command state;
 
     //Constructor DI
     public Logger(LogFilter filter, LogSaver saver) {
@@ -15,7 +16,20 @@ public class Logger {
 
     public void log(Command message) {
         if (filter.allow(message)) {
-            saver.save(message);
+            try {
+                saver.save(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Command message = new Command("");
+        if (message instanceof StringCommand) {
+            StringCommand sc = (StringCommand) message;
+            sc.strMethod();
         }
     }
 }
