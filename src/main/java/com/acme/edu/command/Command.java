@@ -1,5 +1,6 @@
 package com.acme.edu.command;
 
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.Saver;
 
 public class Command {
@@ -58,12 +59,12 @@ public class Command {
         isToBeSaved = true;
     }
 
-    public void process(Command currentCommand, Saver saver) {
+    public void process(Command currentCommand, Saver saver) throws SaveFailureException {
         accumulate(currentCommand);
         saveCommand(saver);
     }
 
-    public void saveCommand(Saver saver) {
+    public void saveCommand(Saver saver) throws SaveFailureException {
         saver.save(decorate());
     }
 }

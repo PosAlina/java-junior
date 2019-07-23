@@ -1,7 +1,9 @@
 package com.acme.edu;
 
 import com.acme.edu.command.Command;
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.Saver;
+import com.acme.edu.exceptions.FlushFailureException;
 
 public class LogController {
     private Command accumulatedCommand;
@@ -14,7 +16,7 @@ public class LogController {
         this.changedState = false;
     }
 
-    public void log(Command currentCommand) {
+    public void log(Command currentCommand) throws SaveFailureException {
         changedState = false;
         if (!hasCommand()) {
             storeCommand(currentCommand);
@@ -37,5 +39,11 @@ public class LogController {
     private void storeCommand(Command currentCommand) {
         accumulatedCommand = currentCommand;
         changedState = true;
+    }
+
+    public void flush() throws FlushFailureException {
+        if (!hasCommand()) {
+            throw new FlushFailureException("No command for output");
+        }
     }
 }

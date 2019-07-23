@@ -1,5 +1,6 @@
 package com.acme.edu.command;
 
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.Saver;
 
 public class ByteCommand extends Command {
@@ -27,7 +28,7 @@ public class ByteCommand extends Command {
     }
 
     @Override
-    public void saveCommand(Saver saver) {
+    public void saveCommand(Saver saver) throws SaveFailureException {
         if (!isToBeSaved) { return; }
         saver.save(decorate());
         update();

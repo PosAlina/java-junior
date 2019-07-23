@@ -2,12 +2,16 @@ package com.acme.edu.iteration03;
 
 import com.acme.edu.Logger;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
+import com.acme.edu.exceptions.FlushFailureException;
+import com.acme.edu.exceptions.SaveFailureException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
+
+import static com.acme.edu.Logger.flush;
 
 public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //region given
@@ -24,12 +28,12 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //endregion
 
     @Test @Ignore
-    public void shouldLogIntegersArray() throws IOException {
+    public void shouldLogIntegersArray() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log(new int[]{-1, 0, 1});
-        Logger.flush();
+        flush();
         Logger.log(new int[]{});
-        Logger.flush();
+        flush();
         //endregion
 
         //region then
@@ -39,12 +43,12 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
 /*    @Test
-    public void shouldLogIntegersMatrix() throws IOException {
+    public void shouldLogIntegersMatrix() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log(new int[][]{{-1, 0, 1}, {1, 2, 3}, {-1, -2, -3}});
-        Logger.flush();
+        flush();
         Logger.log(new int[][]{});
-        Logger.flush();
+        flush();
         //endregion
 
         //region then
@@ -57,10 +61,10 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogIntegersMulitidimentionalArray() throws IOException {
+    public void shouldLogIntegersMulitidimentionalArray() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log(new int[][][][]{{{{2}, {1, 4}}}});
-        Logger.flush();
+        flush();
         //endregion
 
         //region then
@@ -71,10 +75,10 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogStringsWithOneMethodCall() throws IOException {
+    public void shouldLogStringsWithOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log("str1", "string 2", "str 3");
-        Logger.flush();
+        flush();
         //endregion
 
         //region then
@@ -86,10 +90,10 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
 
     @Test
-    public void shouldLogIntegersWithOneMethodCall() throws IOException {
+    public void shouldLogIntegersWithOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log(-1, 0, 1, 3);
-        Logger.flush();
+        flush();
         //endregion
 
         //region then
@@ -98,12 +102,13 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }*/
 
 /*    @Test
-    public void shouldCorrectDealWithIntegerOverflowWhenOneMethodCall() throws IOException {
+    public void shouldCorrectDealWithIntegerOverflowWhenOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
         //region when
         Logger.log(1);
         Logger.log("str");
         Logger.log(Integer.MAX_VALUE - 10);
         Logger.log(11);
+        Logger.flush();
         //endregion
 
         //region then

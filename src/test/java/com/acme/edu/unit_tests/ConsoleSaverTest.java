@@ -1,6 +1,7 @@
 package com.acme.edu.unit_tests;
 
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.ConsoleSaver;
 import com.acme.edu.saver.Saver;
 import org.junit.After;
@@ -26,7 +27,7 @@ public class ConsoleSaverTest implements SysoutCaptureAndAssertionAbility {
     //endregion
 
     @Test
-    public void saveMethodCallSavesToConsole() {
+    public void saveMethodCallSavesToConsole() throws SaveFailureException {
         //region given
         String testString = "test string";
         String newLine = System.lineSeparator();

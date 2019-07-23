@@ -3,6 +3,7 @@ package com.acme.edu.unit_tests;
 import com.acme.edu.command.ByteCommand;
 import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -98,7 +99,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldSetNegativeFlagsWhenSaveCommandWithPositiveFlags() {
+    public void shouldSetNegativeFlagsWhenSaveCommandWithPositiveFlags() throws SaveFailureException {
         //region given
         IntCommand sut = new IntCommand(Integer.MAX_VALUE);
         IntCommand stub = new IntCommand(5);
@@ -117,7 +118,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldNotDecorateMessageWhenIntSaveCommandWithNegativeFlags() {
+    public void shouldNotDecorateMessageWhenIntSaveCommandWithNegativeFlags() throws SaveFailureException {
         //region given
         IntCommand sut = new IntCommand(5);
         //endregion
@@ -132,7 +133,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldSaveMessageAsStringWhenCreatingIntCommand() {
+    public void shouldSaveMessageAsStringWhenCreatingIntCommand() throws SaveFailureException {
         //region given
         Command stub = mock(Command.class);
         IntCommand sut = new IntCommand(5);

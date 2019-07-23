@@ -2,6 +2,7 @@ package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.CharCommand;
 import com.acme.edu.command.Command;
+import com.acme.edu.exceptions.SaveFailureException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class CharCommandTest {
     private char testMessage = 't';
 
     @Test
-    public void shouldSaveMessageAsStringWhenCreatingCharCommand() {
+    public void shouldSaveMessageAsStringWhenCreatingCharCommand() throws SaveFailureException {
         //region given
         Command stub = mock(Command.class);
         CharCommand sut = new CharCommand(testMessage);
