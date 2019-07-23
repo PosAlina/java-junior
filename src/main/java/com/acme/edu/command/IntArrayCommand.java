@@ -4,22 +4,26 @@ public class IntArrayCommand extends Command {
     private int[] message;
 
     public IntArrayCommand(int[] message) {
-        this.message = message;
+        updateMessage(message);
         this.state = States.INTARRAY_STATE;
     }
 
-    @Override
-    public String getMessageAsString() {
-        if (message.length == 0) {
-            return "{}";
+    private String createMessageAsString() {
+        if (message.length == 0) { return "{}"; }
+        StringBuilder createdMessageAsString = new StringBuilder("{");
+        int arrayIndex = 0;
+        while (arrayIndex < message.length - 1) {
+            createdMessageAsString.append(message[arrayIndex])
+                    .append(", ");
+            arrayIndex++;
         }
-        StringBuilder decoratedMessage = new StringBuilder("{");
-        int index = 0;
-        while (index < message.length - 1) {
-            decoratedMessage.append(message[index]).append(", ");
-            index++;
-        }
-        decoratedMessage.append(message[index]).append("}");
-        return decoratedMessage.toString();
+        createdMessageAsString.append(message[arrayIndex])
+                .append("}");
+        return createdMessageAsString.toString();
+    }
+
+    private void updateMessage(int[] message) {
+        this.message = message;
+        messageAsString = createMessageAsString();
     }
 }

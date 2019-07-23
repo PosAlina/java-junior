@@ -1,37 +1,37 @@
 package com.acme.edu.command;
 
+import com.acme.edu.saver.Saver;
+
 public class ByteCommand extends Command {
     private int message;
-    private int overflowRest = 0;
+    private int overflowRest;
 
     public ByteCommand(byte message) {
-        this.message = message;
-        this.state = States.BYTE_STATE;
-    }
-
-    @Override
-    public String getMessageAsString() {
-        return String.valueOf(message);
-    }
-
-    @Override
-    public void update() {
-        isToBeSaved = false;
-        isToFixOverflow = false;
-        message = overflowRest;
+        updateMessage(message);
+        state = States.BYTE_STATE;
         overflowRest = 0;
     }
 
     @Override
-    public void accumulate(Command secondCommand) {
-        if (secondCommand instanceof ByteCommand) {
-            isToFixOverflow = checkOverflow(((ByteCommand) secondCommand).getMessage());
-            isToBeSaved = isToFixOverflow;
-            if (!isToFixOverflow) {
-                message = message + ((ByteCommand) secondCommand).getMessage();
-            }
-        } else {
+    public void accumulate(Command currentCommand) {
+        if (!isEqualTypes(currentCommand)) {
             isToBeSaved = true;
+            return;
+        }
+        int currentCommandMessage = ((ByteCommand) currentCommand).getMessage();
+        isToFixOverflow = checkAndProcessOverflow(currentCommandMessage);
+        isToBeSaved = isToFixOverflow;
+        if (!isToFixOverflow) {
+            updateMessage(message + currentCommandMessage);
+        }
+    }
+
+    @Override
+    public void saveCommand(Saver saver) {
+        if (!isToBeSaved) { return; }
+        saver.save(decorate());
+        if (isToFixOverflow) {
+            update();
         }
     }
 
@@ -39,10 +39,22 @@ public class ByteCommand extends Command {
         return message;
     }
 
-    private boolean checkOverflow(int secondMessage) {
+    public int getOverflowRest() {
+        return overflowRest;
+    }
+
+    private void update() {
+        isToBeSaved = false;
+        isToFixOverflow = false;
+        updateMessage(overflowRest);
+        overflowRest = 0;
+    }
+
+    private boolean checkAndProcessOverflow(int secondMessage) {
         if (isPositiveOverflow(secondMessage)) {
             return processOverflow(secondMessage, Byte.MAX_VALUE);
-        } else if (isNegativeOverflow(secondMessage)) {
+        }
+        if (isNegativeOverflow(secondMessage)) {
             return processOverflow(secondMessage, Byte.MIN_VALUE);
         }
         overflowRest = 0;
@@ -56,10 +68,19 @@ public class ByteCommand extends Command {
     }
 
     private boolean isPositiveOverflow(int secondMessage) {
-        return (secondMessage > 0) && (message > Byte.MAX_VALUE - secondMessage);
+        return secondMessage > 0 && message > Byte.MAX_VALUE - secondMessage;
     }
 
     private boolean isNegativeOverflow(int secondMessage) {
-        return (secondMessage < 0) && (message < Byte.MIN_VALUE - secondMessage);
+        return secondMessage < 0 && message < Byte.MIN_VALUE - secondMessage;
+    }
+
+    private boolean isEqualTypes(Command message) {
+        return message instanceof ByteCommand;
+    }
+
+    private void updateMessage(int message) {
+        this.message = message;
+        messageAsString = String.valueOf(message);
     }
 }

@@ -4,11 +4,12 @@ import java.util.Objects;
 
 public class StringCommand extends Command {
     private String message;
-    private int stringCounter = 1;
+    private int stringCounter;
 
     public StringCommand(String message) {
-        this.message = message;
-        this.state = States.STRING_STATE;
+        updateMessage(message);
+        state = States.STRING_STATE;
+        stringCounter = 1;
     }
 
     @Override
@@ -21,10 +22,8 @@ public class StringCommand extends Command {
 
     @Override
     public String getMessageAsString() {
-        if (stringCounter > 1) {
-            return message + " (x" + stringCounter + ")";
-        }
-        return message;
+        if (stringCounter == 1) { return message; }
+        return message + " (x" + stringCounter + ")";
     }
 
     public String getMessage() {
@@ -35,7 +34,20 @@ public class StringCommand extends Command {
         return stringCounter;
     }
 
-    private boolean isEqualStringCommand(Command secondCommand) {
-        return secondCommand instanceof StringCommand && Objects.equals(message, ((StringCommand) secondCommand).getMessage());
+    private boolean isEqualStringCommand(Command currentCommand) {
+        return isEqualTypes(currentCommand) && isEqualMessages((StringCommand) currentCommand);
+    }
+
+    private boolean isEqualTypes(Command message) {
+        return message instanceof StringCommand;
+    }
+
+    private boolean isEqualMessages(StringCommand currentCommand) {
+        return Objects.equals(message, currentCommand.getMessage());
+    }
+
+    private void updateMessage(String message) {
+        this.message = message;
+        messageAsString = message;
     }
 }

@@ -1,4 +1,4 @@
-package com.acme.edu.demo;
+package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.IntArrayCommand;
 import org.junit.Test;

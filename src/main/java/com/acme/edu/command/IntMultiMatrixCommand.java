@@ -4,31 +4,35 @@ public class IntMultiMatrixCommand extends Command {
     private Object message;
 
     public IntMultiMatrixCommand(Object message) {
-        this.message = message;
-        this.state = States.INTMULTIMATRIX_STATE;
+        updateMessage(message);
+        state = States.INTMULTIMATRIX_STATE;
     }
 
-    @Override
-    public String getMessageAsString() {
-        return multiMatrixDecorate(message);
-    }
-
-    private String multiMatrixDecorate(Object message) {
+    private String createMessageAsString(Object message) {
+        if (!isArray(message)) { return arrayProcess((int[]) message); }
         String newLine = System.lineSeparator();
-        StringBuilder decoratedMessage = new StringBuilder();
-        if (message instanceof Object[]) {
-            decoratedMessage.append("{").append(newLine);
-            for (Object array : (Object[]) message) {
-                decoratedMessage.append(multiMatrixDecorate(array));
-            }
-            return decoratedMessage + "}" + newLine;
+        StringBuilder createdMessageAsString = new StringBuilder("{");
+        createdMessageAsString.append(newLine);
+        for (Object arrayElement : (Object[]) message) {
+            createdMessageAsString.append(createMessageAsString(arrayElement));
         }
-        return decoratedMessage + arrayProcess((int[]) message);
+        createdMessageAsString.append("}")
+                .append(newLine);
+        return createdMessageAsString.toString();
+    }
+
+    private boolean isArray(Object message) {
+        return message instanceof Object[];
     }
 
     private String arrayProcess(int[] line) {
         String newLine = System.lineSeparator();
         IntArrayCommand array = new IntArrayCommand(line);
         return array.getMessageAsString() + newLine;
+    }
+
+    private void updateMessage(Object message) {
+        this.message = message;
+        messageAsString = createMessageAsString(message);
     }
 }

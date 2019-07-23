@@ -29,11 +29,15 @@ public class Command {
     protected States state;
     protected boolean isToBeSaved;
     protected boolean isToFixOverflow;
+    protected String decoratedMessage;
+    protected String messageAsString;
 
     public Command() {
         this.isToBeSaved = false;
         this.isToFixOverflow = false;
         this.state = States.NO_STATE;
+        this.decoratedMessage = null;
+        this.messageAsString = null;
     }
 
     public boolean isToBeSaved() {
@@ -45,31 +49,28 @@ public class Command {
     }
 
     public String getMessageAsString() {
-        return "";
+        return messageAsString;
+    }
+
+    public String getDecoratedMessage() {
+        return decoratedMessage;
     }
 
     public String decorate() {
-        return state.getPrefix() + getMessageAsString();
+        decoratedMessage = state.getPrefix() + getMessageAsString();
+        return getDecoratedMessage();
     }
 
     public void accumulate(Command command) {
         isToBeSaved = true;
     }
 
-    public void update() {}
-
-    public boolean isCompletelyProcessed() {
-        return isToBeSaved;
-    }
-
     public void process(Command currentCommand, Saver saver) {
         accumulate(currentCommand);
-        if (isToBeSaved) {
-            saver.save(decorate());
-            if (isToFixOverflow) {
-                update();
-            }
-        }
+        saveCommand(saver);
+    }
+
+    public void saveCommand(Saver saver) {
+        saver.save(decorate());
     }
 }
-

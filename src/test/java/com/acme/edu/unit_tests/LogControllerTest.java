@@ -1,4 +1,4 @@
-package com.acme.edu.demo;
+package com.acme.edu.unit_tests;
 
 import com.acme.edu.LogController;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
@@ -53,7 +53,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);
-        when(stub1.isCompletelyProcessed()).thenReturn(true);
+        when(stub1.isToBeSaved()).thenReturn(true);
         logController.log(null);
         logController.log(stub1);
         //endregion
@@ -63,7 +63,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
 
         //region then
-        assertTrue(logController.hasChangedState());
+        assertTrue(logController.isChangedState());
         //endregion
     }
 
@@ -72,7 +72,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);
-        when(stub1.isCompletelyProcessed()).thenReturn(false);
+        when(stub1.isToBeSaved()).thenReturn(false);
         logController.log(null);
         logController.log(stub1);
         //endregion
@@ -82,8 +82,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
 
         //region then
-        assertFalse(logController.hasChangedState());
+        assertFalse(logController.isChangedState());
         //endregion
     }
 }
-

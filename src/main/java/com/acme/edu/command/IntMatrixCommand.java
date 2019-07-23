@@ -4,28 +4,31 @@ public class IntMatrixCommand extends Command {
     private int[][] message;
 
     public IntMatrixCommand(int[][] message) {
-        this.message = message;
-        this.state = States.INTMATRIX_STATE;
+        updateMessage(message);
+        state = States.INTMATRIX_STATE;
     }
 
-    @Override
-    public String getMessageAsString() {
+    private String createMessageAsString() {
+        if (message.length == 0) { return "{}"; }
         String newLine = System.lineSeparator();
-        if (message.length == 0) {
-            return "{}";
+        StringBuilder createdMessageAsString = new StringBuilder("{");
+        createdMessageAsString.append(newLine);
+        for (int[] matrixLine : message) {
+            createdMessageAsString.append(arrayProcess(matrixLine))
+                    .append(newLine);
         }
-        StringBuilder decoratedMessage = new StringBuilder("{");
-        decoratedMessage.append(newLine);
-        for (int[] line : message) {
-            decoratedMessage.append(arrayProcess(line));
-            decoratedMessage.append(newLine);
-        }
-        decoratedMessage.append("}").append(newLine);
-        return decoratedMessage.toString();
+        createdMessageAsString.append("}")
+                .append(newLine);
+        return createdMessageAsString.toString();
     }
 
-    private String arrayProcess(int[] line) {
-        IntArrayCommand array = new IntArrayCommand(line);
+    private String arrayProcess(int[] matrixLine) {
+        IntArrayCommand array = new IntArrayCommand(matrixLine);
         return array.getMessageAsString();
+    }
+
+    private void updateMessage(int[][] message) {
+        this.message = message;
+        messageAsString = createMessageAsString();
     }
 }

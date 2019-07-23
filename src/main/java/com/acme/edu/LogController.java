@@ -21,7 +21,7 @@ public class LogController {
             return;
         }
         accumulatedCommand.process(currentCommand, saver);
-        if (accumulatedCommand.isCompletelyProcessed()) {
+        if (accumulatedCommand.isToBeSaved()) {
             storeCommand(currentCommand);
         }
     }
@@ -30,7 +30,7 @@ public class LogController {
         return accumulatedCommand != null;
     }
 
-    public boolean hasChangedState() {
+    public boolean isChangedState() {
         return changedState;
     }
 
@@ -38,6 +38,4 @@ public class LogController {
         accumulatedCommand = currentCommand;
         changedState = true;
     }
-
-
 }

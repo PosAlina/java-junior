@@ -1,14 +1,18 @@
-package com.acme.edu.demo;
+package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.ByteCommand;
 import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
+import com.acme.edu.command.StringCommand;
+import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 public class ByteCommandTest {
+    private Saver saver = mock(Saver.class);
+
     @Test
     public void shouldSetFlagToBeSavedWhenAccumulatedWithNotByteCommand() {
         //region given
@@ -91,6 +95,57 @@ public class ByteCommandTest {
         //region then
         assertFalse(sut.isToBeSaved());
         assertFalse(sut.isToFixOverflow());
+        //endregion
+    }
+
+    @Test
+    public void shouldSetNegativeFlagsWhenSaveByteCommandWithPositiveFlags() {
+        //region given
+        ByteCommand sut = new ByteCommand(Byte.MAX_VALUE);
+        ByteCommand stub = new ByteCommand((byte) 5);
+        //endregion
+
+        //region when
+        sut.accumulate(stub);
+        sut.saveCommand(saver);
+        //endregion
+
+        //region then
+        assertFalse(sut.isToBeSaved());
+        assertFalse(sut.isToFixOverflow());
+        assertEquals(sut.getOverflowRest(), 0);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotDecorateMessageWhenSaveCommandWithNegativeFlags() {
+        //region given
+        ByteCommand sut = new ByteCommand(Byte.MAX_VALUE);
+        //endregion
+
+        //region when
+        sut.saveCommand(saver);
+        //endregion
+
+        //region then
+        assertNull(sut.getDecoratedMessage());
+        //endregion
+    }
+
+    @Test
+    public void shoulDecorateMessageAndSetNegativeFlagsWhenSaveCommandHadNotOverflowAndShouldBeSaved() {
+        //region given
+        ByteCommand sut = new ByteCommand((byte) 4);
+        StringCommand stub = new StringCommand("test string");
+        //endregion
+
+        //region when
+        sut.process(stub, saver);
+        //endregion
+
+        //region then
+        assertNotNull(sut.getDecoratedMessage());
+        assertTrue(sut.isToBeSaved());
         //endregion
     }
 }

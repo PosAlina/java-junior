@@ -4,12 +4,12 @@ public class ObjectCommand extends Command {
     private Object message;
 
     public ObjectCommand(Object message) {
-        this.message = message;
-        this.state = States.REFERENCE_STATE;
+        updateMessage(message);
+        state = States.REFERENCE_STATE;
     }
 
-    @Override
-    public String getMessageAsString() {
-        return String.valueOf(message);
+    private void updateMessage(Object message) {
+        this.message = message;
+        messageAsString = String.valueOf(message);
     }
 }
