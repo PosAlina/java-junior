@@ -118,7 +118,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldNotDecrateMessageWhenSaveCommandWithNegativeFlags() {
+    public void shouldNotDecorateMessageWhenIntSaveCommandWithNegativeFlags() {
         //region given
         IntCommand sut = new IntCommand(Integer.MAX_VALUE);
         //endregion
@@ -134,20 +134,18 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shoulDecorateMessageAndSetNegativeFlagsWhenSaveCommandHadNotOverflowAndShouldBeSaved() {
+    public void shouldSaveMessageAsStringWhenCreatingIntCommand() {
         //region given
-        IntCommand sut = new IntCommand(4);
-        StringCommand stub = new StringCommand("test string");
+        Command stub = mock(Command.class);
+        IntCommand sut = new IntCommand(5);
         //endregion
 
         //region when
-        sut.update();
         sut.process(stub, saver);
         //endregion
 
         //region then
-        assertNotNull(sut.getDecoratedMessage());
-        assertTrue(sut.isToBeSaved());
+        assertNotNull(sut.getMessageAsString());
         //endregion
     }
 }

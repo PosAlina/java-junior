@@ -1,36 +1,19 @@
 package com.acme.edu.unit_tests;
 
 import com.acme.edu.LogController;
-import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import com.acme.edu.command.Command;
 import com.acme.edu.saver.Saver;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
+public class LogControllerTest {
     //region given
     private Saver saver = mock(Saver.class);
     private LogController logController = new LogController(saver);
-
-    @Before
-    public void setUpSystemOut() throws IOException {
-        resetOut();
-        captureSysout();
-    }
-
-    @After
-    public void tearDown() {
-        resetOut();
-    }
-    //endregion
 
     @Test
     public void shouldSaveCommandWhenHadNoCommand() {
@@ -49,7 +32,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldChangeCommandWhenPreviousCompletelyProcessed() {
+    public void shouldChangeCommandWhenPreviousIsToBeSaved() {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);
@@ -68,7 +51,7 @@ public class LogControllerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldNotChangeCommandWhenPreviousNotCompletelyProcessed() {
+    public void shouldNotChangeCommandWhenPreviousIsNotToBeSaved() {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);

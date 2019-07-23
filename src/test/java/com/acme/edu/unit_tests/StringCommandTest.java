@@ -107,7 +107,7 @@ public class StringCommandTest {
 
         //region then
         String suffix = " (x" + sut.getStringCounter() + ")";
-        assertEquals(sut.getMessageAsString(), testMessage + suffix);
+        assertEquals(testMessage + suffix, sut.getMessageAsString());
         //endregion
     }
 
@@ -124,7 +124,7 @@ public class StringCommandTest {
         //endregion
 
         //region then
-        assertEquals(sut.getMessageAsString(), testMessage);
+        assertEquals(testMessage, sut.getMessageAsString());
         //endregion
     }
 }

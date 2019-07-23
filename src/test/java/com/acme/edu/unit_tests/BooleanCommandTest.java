@@ -9,37 +9,22 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 public class BooleanCommandTest {
-    @Test
-    public void shouldIncrementStringCounterWhenAccumulatedWithEqualString() {
-        //region given
-        boolean testMessage = true;
-        String testString = "true";
-        //endregion
-
-        //region when
-        BooleanCommand sut = new BooleanCommand(testMessage);
-        //endregion
-
-        //region then
-        assertEquals(testString, sut.getMessageAsString());
-        //endregion
-    }
+    private Saver saver = mock(Saver.class);
+    private boolean testMessage = true;
 
     @Test
-    public void shouldNotDecrateMessageWhenSaveCommandWithNegativeFlags() {
+    public void shouldSaveMessageAsStringWhenCreatingBooleanCommand() {
         //region given
-        BooleanCommand sut = new BooleanCommand(true);
         Command stub = mock(Command.class);
-        Saver saver = mock(Saver.class);
+        BooleanCommand sut = new BooleanCommand(testMessage);
         //endregion
 
         //region when
         sut.process(stub, saver);
         //endregion
 
-        //region the
-        assertNotNull(sut.getDecoratedMessage());
-        assertTrue(sut.isToBeSaved());
+        //region then
+        assertNotNull(sut.getMessageAsString());
         //endregion
     }
 }

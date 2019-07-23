@@ -118,7 +118,7 @@ public class ByteCommandTest {
     }
 
     @Test
-    public void shouldNotDecorateMessageWhenSaveCommandWithNegativeFlags() {
+    public void shouldNotDecorateMessageWhenSaveByteCommandWithNegativeFlags() {
         //region given
         ByteCommand sut = new ByteCommand(Byte.MAX_VALUE);
         //endregion
@@ -133,10 +133,10 @@ public class ByteCommandTest {
     }
 
     @Test
-    public void shoulDecorateMessageAndSetNegativeFlagsWhenSaveCommandHadNotOverflowAndShouldBeSaved() {
+    public void shouldSaveMessageAsStringWhenCreatingByteCommand() {
         //region given
-        ByteCommand sut = new ByteCommand((byte) 4);
-        StringCommand stub = new StringCommand("test string");
+        Command stub = mock(Command.class);
+        ByteCommand sut = new ByteCommand((byte) 5);
         //endregion
 
         //region when
@@ -144,8 +144,7 @@ public class ByteCommandTest {
         //endregion
 
         //region then
-        assertNotNull(sut.getDecoratedMessage());
-        assertTrue(sut.isToBeSaved());
+        assertNotNull(sut.getMessageAsString());
         //endregion
     }
 }

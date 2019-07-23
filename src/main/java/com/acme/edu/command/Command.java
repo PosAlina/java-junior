@@ -3,7 +3,7 @@ package com.acme.edu.command;
 import com.acme.edu.saver.Saver;
 
 public class Command {
-    protected enum States {
+    public enum States {
         NO_STATE(""),
         INT_STATE("primitive: "),
         BYTE_STATE("primitive: "),
@@ -21,7 +21,7 @@ public class Command {
             this.prefix = prefix;
         }
 
-        protected String getPrefix() {
+        public String getPrefix() {
             return prefix;
         }
     }

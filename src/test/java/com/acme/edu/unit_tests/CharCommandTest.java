@@ -1,23 +1,31 @@
 package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.CharCommand;
+import com.acme.edu.command.Command;
+import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
-public class CharCommandTest {
-    @Test
-    public void shouldIncrementStringCounterWhenAccumulatedWithEqualString() {
-        //region given
-        char testMessage = 't';
-        String testString = "t";
-        //endregion
+import static org.mockito.Mockito.mock;
 
-        //region when
+public class CharCommandTest {
+    private Saver saver = mock(Saver.class);
+    private char testMessage = 't';
+
+    @Test
+    public void shouldSaveMessageAsStringWhenCreatingCharCommand() {
+        //region given
+        Command stub = mock(Command.class);
         CharCommand sut = new CharCommand(testMessage);
         //endregion
 
+        //region when
+        sut.process(stub, saver);
+        //endregion
+
         //region then
-        assertEquals(testString, sut.getMessageAsString());
+        assertNotNull(sut.getMessageAsString());
         //endregion
     }
 }
