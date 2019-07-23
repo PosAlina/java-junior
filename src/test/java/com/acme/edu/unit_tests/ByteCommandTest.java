@@ -3,7 +3,6 @@ package com.acme.edu.unit_tests;
 import com.acme.edu.command.ByteCommand;
 import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
-import com.acme.edu.command.StringCommand;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -120,7 +119,7 @@ public class ByteCommandTest {
     @Test
     public void shouldNotDecorateMessageWhenSaveByteCommandWithNegativeFlags() {
         //region given
-        ByteCommand sut = new ByteCommand(Byte.MAX_VALUE);
+        ByteCommand sut = new ByteCommand((byte) 5);
         //endregion
 
         //region when
@@ -128,7 +127,7 @@ public class ByteCommandTest {
         //endregion
 
         //region then
-        assertNull(sut.getDecoratedMessage());
+        assertEquals("primitive: 5", sut.decorate());
         //endregion
     }
 

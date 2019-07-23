@@ -30,9 +30,7 @@ public class ByteCommand extends Command {
     public void saveCommand(Saver saver) {
         if (!isToBeSaved) { return; }
         saver.save(decorate());
-        if (isToFixOverflow) {
-            update();
-        }
+        update();
     }
 
     public int getMessage() {
@@ -44,10 +42,11 @@ public class ByteCommand extends Command {
     }
 
     private void update() {
-        isToBeSaved = false;
-        isToFixOverflow = false;
+        if (!isToFixOverflow) { return; }
         updateMessage(overflowRest);
         overflowRest = 0;
+        isToBeSaved = false;
+        isToFixOverflow = false;
     }
 
     private boolean checkAndProcessOverflow(int secondMessage) {

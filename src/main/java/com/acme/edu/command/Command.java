@@ -29,14 +29,12 @@ public class Command {
     protected States state;
     protected boolean isToBeSaved;
     protected boolean isToFixOverflow;
-    protected String decoratedMessage;
     protected String messageAsString;
 
     public Command() {
         this.isToBeSaved = false;
         this.isToFixOverflow = false;
         this.state = States.NO_STATE;
-        this.decoratedMessage = null;
         this.messageAsString = null;
     }
 
@@ -52,13 +50,8 @@ public class Command {
         return messageAsString;
     }
 
-    public String getDecoratedMessage() {
-        return decoratedMessage;
-    }
-
     public String decorate() {
-        decoratedMessage = state.getPrefix() + getMessageAsString();
-        return getDecoratedMessage();
+        return state.getPrefix() + getMessageAsString();
     }
 
     public void accumulate(Command command) {

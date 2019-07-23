@@ -3,7 +3,6 @@ package com.acme.edu.unit_tests;
 import com.acme.edu.command.ByteCommand;
 import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
-import com.acme.edu.command.StringCommand;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -67,7 +66,7 @@ public class IntCommandTest {
     @Test
     public void shouldNotSetFlagsWhenNoOverflowAndPositiveMessage() {
         //region given
-        IntCommand sut = new IntCommand(Integer.MAX_VALUE - 5);
+        IntCommand sut = new IntCommand(1);
         IntCommand stub = new IntCommand(4);
         //endregion
 
@@ -120,16 +119,15 @@ public class IntCommandTest {
     @Test
     public void shouldNotDecorateMessageWhenIntSaveCommandWithNegativeFlags() {
         //region given
-        IntCommand sut = new IntCommand(Integer.MAX_VALUE);
+        IntCommand sut = new IntCommand(5);
         //endregion
 
         //region when
-        sut.update();
         sut.saveCommand(saver);
         //endregion
 
         //region then
-        assertNull(sut.getDecoratedMessage());
+        assertEquals("primitive: 5", sut.decorate());
         //endregion
     }
 
