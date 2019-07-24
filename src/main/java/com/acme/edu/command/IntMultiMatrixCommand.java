@@ -5,7 +5,7 @@ public class IntMultiMatrixCommand extends Command {
 
     public IntMultiMatrixCommand(Object message) {
         updateMessage(message);
-        state = States.INTMULTIMATRIX_STATE;
+        prefix = "primitives multimatrix: ";
     }
 
     private String createMessageAsString(Object message) {

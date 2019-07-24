@@ -1,6 +1,6 @@
 package com.acme.edu.command;
 
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.SaveException;
 import com.acme.edu.saver.Saver;
 
 public class IntCommand extends Command {
@@ -9,7 +9,7 @@ public class IntCommand extends Command {
 
     public IntCommand(int message) {
         updateMessage(message);
-        state = States.INT_STATE;
+        prefix = "primitive: ";
         overflowRest = 0;
     }
 
@@ -28,7 +28,7 @@ public class IntCommand extends Command {
     }
 
     @Override
-    public void saveCommand(Saver saver) throws SaveFailureException {
+    public void saveCommand(Saver saver) throws SaveException {
         if (!isToBeSaved) { return; }
         saver.save(decorate());
         update();

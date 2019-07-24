@@ -5,7 +5,7 @@ public class IntArrayCommand extends Command {
 
     public IntArrayCommand(int[] message) {
         updateMessage(message);
-        this.state = States.INTARRAY_STATE;
+        prefix = "primitives array: ";
     }
 
     private String createMessageAsString() {

@@ -2,8 +2,7 @@ package com.acme.edu.iteration01;
 
 import com.acme.edu.Logger;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
-import com.acme.edu.exceptions.FlushFailureException;
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.LogException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -28,7 +27,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //endregion
 
     @Test @Ignore
-    public void shouldLogInteger() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogInteger() throws IOException, LogException {
         //region when
         Logger.log(1);
         Logger.flush();
@@ -45,7 +44,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
     }
 /*    @Test
-    public void shouldLogByte() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogByte() throws IOException, SaveException, FlushException {
         //region when
         Logger.log((byte) 1);
         Logger.flush();
@@ -64,7 +63,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogChar() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogChar() throws IOException, SaveException, FlushException {
         //region when
         Logger.log('a');
         Logger.log('b');
@@ -79,7 +78,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogString() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogString() throws IOException, SaveException, FlushException {
         //region when
         Logger.log("test string 1");
         Logger.flush();
@@ -95,7 +94,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogBoolean() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogBoolean() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(true);
         Logger.log(false);
@@ -110,7 +109,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogReference() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogReference() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(new Object());
         Logger.flush();

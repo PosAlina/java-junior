@@ -5,7 +5,7 @@ public class BooleanCommand extends Command {
 
     public BooleanCommand(boolean message) {
         updateMessage(message);
-        state = States.BOOLEAN_STATE;
+        prefix = "primitive: ";
     }
 
     private void updateMessage(boolean message) {

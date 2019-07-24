@@ -8,7 +8,7 @@ public class StringCommand extends Command {
 
     public StringCommand(String message) {
         updateMessage(message);
-        state = States.STRING_STATE;
+        prefix = "string: ";
         stringCounter = 1;
     }
 

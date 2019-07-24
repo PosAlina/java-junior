@@ -2,8 +2,7 @@ package com.acme.edu.iteration03;
 
 import com.acme.edu.Logger;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
-import com.acme.edu.exceptions.FlushFailureException;
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.LogException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -28,7 +27,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //endregion
 
     @Test @Ignore
-    public void shouldLogIntegersArray() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogIntegersArray() throws IOException, LogException {
         //region when
         Logger.log(new int[]{-1, 0, 1});
         flush();
@@ -43,7 +42,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
 /*    @Test
-    public void shouldLogIntegersMatrix() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogIntegersMatrix() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(new int[][]{{-1, 0, 1}, {1, 2, 3}, {-1, -2, -3}});
         flush();
@@ -61,7 +60,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogIntegersMulitidimentionalArray() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogIntegersMulitidimentionalArray() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(new int[][][][]{{{{2}, {1, 4}}}});
         flush();
@@ -75,7 +74,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 
     @Test
-    public void shouldLogStringsWithOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogStringsWithOneMethodCall() throws IOException, SaveException, FlushException {
         //region when
         Logger.log("str1", "string 2", "str 3");
         flush();
@@ -90,7 +89,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
 
     @Test
-    public void shouldLogIntegersWithOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldLogIntegersWithOneMethodCall() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(-1, 0, 1, 3);
         flush();
@@ -102,7 +101,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }*/
 
 /*    @Test
-    public void shouldCorrectDealWithIntegerOverflowWhenOneMethodCall() throws IOException, SaveFailureException, FlushFailureException {
+    public void shouldCorrectDealWithIntegerOverflowWhenOneMethodCall() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(1);
         Logger.log("str");

@@ -2,8 +2,8 @@ package com.acme.edu.unit_tests;
 
 import com.acme.edu.LogController;
 import com.acme.edu.command.Command;
-import com.acme.edu.exceptions.FlushFailureException;
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.FlushException;
+import com.acme.edu.exceptions.LogException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class LogControllerTest {
     private LogController logController = new LogController(saver);
 
     @Test
-    public void shouldSaveCommandWhenHadNoCommand() throws SaveFailureException {
+    public void shouldSaveCommandWhenHadNoCommand() throws LogException {
         //region given
         Command stub = mock(Command.class);
         logController.log(null);
@@ -34,7 +34,7 @@ public class LogControllerTest {
     }
 
     @Test
-    public void shouldChangeCommandWhenPreviousIsToBeSaved() throws SaveFailureException {
+    public void shouldChangeCommandWhenPreviousIsToBeSaved() throws LogException {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);
@@ -52,7 +52,7 @@ public class LogControllerTest {
     }
 
     @Test
-    public void shouldNotChangeCommandWhenPreviousIsNotToBeSaved() throws SaveFailureException {
+    public void shouldNotChangeCommandWhenPreviousIsNotToBeSaved() throws LogException {
         //region given
         Command stub1 = mock(Command.class);
         Command stub2 = mock(Command.class);
@@ -70,14 +70,14 @@ public class LogControllerTest {
         //endregion
     }
 
-    @Test(expected = FlushFailureException.class)
-    public void shouldThrowFlushFailureExceptionWhenHasNoCommand() throws FlushFailureException {
+    @Test(expected = LogException.class)
+    public void shouldThrowFlushFailureExceptionWhenHasNoCommand() throws LogException {
         logController.flush();
         logController.flush();
     }
 
     @Test
-    public void shouldNotThrowFlushFailureExceptionWhenHasCommand() throws FlushFailureException, SaveFailureException {
+    public void shouldNotThrowFlushFailureExceptionWhenHasCommand() throws LogException {
         Command stub1 = mock(Command.class);
         logController.log(stub1);
         logController.flush();

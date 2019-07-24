@@ -1,9 +1,8 @@
 package com.acme.edu.unit_tests;
 
-import com.acme.edu.Logger;
 import com.acme.edu.command.BooleanCommand;
 import com.acme.edu.command.Command;
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.LogException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class BooleanCommandTest {
     private boolean testMessage = true;
 
     @Test
-    public void shouldSaveMessageAsStringWhenCreatingBooleanCommand() throws SaveFailureException {
+    public void shouldSaveMessageAsStringWhenCreatingBooleanCommand() throws LogException {
         //region given
         Command stub = mock(Command.class);
         BooleanCommand sut = new BooleanCommand(testMessage);
@@ -31,7 +30,7 @@ public class BooleanCommandTest {
     }
 
     @Test
-    public void shouldSaveMessageAsStringWhenCreatingBooleanCommand1() throws SaveFailureException {
+    public void shouldSaveMessageAsStringWhenCreatingBooleanCommand1() throws LogException {
         //region given
         Command stub = mock(Command.class);
         BooleanCommand sut = new BooleanCommand(testMessage);

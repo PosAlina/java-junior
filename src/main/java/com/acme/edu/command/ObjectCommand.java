@@ -5,7 +5,7 @@ public class ObjectCommand extends Command {
 
     public ObjectCommand(Object message) {
         updateMessage(message);
-        state = States.REFERENCE_STATE;
+        prefix = "reference: ";
     }
 
     private void updateMessage(Object message) {

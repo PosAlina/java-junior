@@ -5,7 +5,7 @@ public class CharCommand extends Command{
 
     public CharCommand(char message) {
         updateMessage(message);
-        state = States.CHAR_STATE;
+        prefix = "char: ";
     }
 
     private void updateMessage(char message) {

@@ -1,41 +1,20 @@
 package com.acme.edu.command;
 
-import com.acme.edu.exceptions.SaveFailureException;
+import com.acme.edu.exceptions.LogException;
+import com.acme.edu.exceptions.SaveException;
 import com.acme.edu.saver.Saver;
+import sun.rmi.runtime.Log;
 
 public class Command {
-    public enum States {
-        NO_STATE(""),
-        INT_STATE("primitive: "),
-        BYTE_STATE("primitive: "),
-        BOOLEAN_STATE("primitive: "),
-        STRING_STATE("string: "),
-        CHAR_STATE("char: "),
-        REFERENCE_STATE("reference: "),
-        INTARRAY_STATE("primitives array: "),
-        INTMATRIX_STATE("primitives matrix: "),
-        INTMULTIMATRIX_STATE("primitives multimatrix: ");
-
-        private final String prefix;
-
-        States(String prefix) {
-            this.prefix = prefix;
-        }
-
-        public String getPrefix() {
-            return prefix;
-        }
-    }
-
-    protected States state;
     protected boolean isToBeSaved;
     protected boolean isToFixOverflow;
     protected String messageAsString;
+    protected String prefix;
 
     public Command() {
+        prefix = "";
         this.isToBeSaved = false;
         this.isToFixOverflow = false;
-        this.state = States.NO_STATE;
         this.messageAsString = null;
     }
 
@@ -51,20 +30,29 @@ public class Command {
         return messageAsString;
     }
 
+    public String getPrefix() { return prefix; }
+
     public String decorate() {
-        return state.getPrefix() + getMessageAsString();
+        return getPrefix() + getMessageAsString();
     }
 
     public void accumulate(Command command) {
         isToBeSaved = true;
     }
 
-    public void process(Command currentCommand, Saver saver) throws SaveFailureException {
+    public void process(Command currentCommand, Saver saver) throws LogException {
         accumulate(currentCommand);
-        saveCommand(saver);
+        try {
+            saveCommand(saver);
+        } catch (SaveException e) {
+            throw new LogException(e.getMessage());
+        }
     }
 
-    public void saveCommand(Saver saver) throws SaveFailureException {
+    public void saveCommand(Saver saver) throws SaveException {
+        if (saver == null) {
+            throw new SaveException("Unexisted saver");
+        }
         saver.save(decorate());
     }
 }

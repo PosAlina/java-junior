@@ -5,7 +5,7 @@ public class IntMatrixCommand extends Command {
 
     public IntMatrixCommand(int[][] message) {
         updateMessage(message);
-        state = States.INTMATRIX_STATE;
+        prefix = "primitives matrix: ";
     }
 
     private String createMessageAsString() {
