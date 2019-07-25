@@ -2,7 +2,6 @@ package com.acme.edu.unit_tests;
 
 import com.acme.edu.LogController;
 import com.acme.edu.command.Command;
-import com.acme.edu.exceptions.FlushException;
 import com.acme.edu.exceptions.LogException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;

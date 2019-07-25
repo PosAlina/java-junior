@@ -51,7 +51,7 @@ public class Command {
 
     public void saveCommand(Saver saver) throws SaveException {
         if (saver == null) {
-            throw new SaveException("Unexisted saver");
+            throw new SaveException("Unexisting saver");
         }
         saver.save(decorate());
     }

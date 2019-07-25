@@ -29,6 +29,9 @@ public class ByteCommand extends Command {
 
     @Override
     public void saveCommand(Saver saver) throws SaveException {
+        if (saver == null) {
+            throw new SaveException("Unexisting saver");
+        }
         if (!isToBeSaved) { return; }
         saver.save(decorate());
         update();

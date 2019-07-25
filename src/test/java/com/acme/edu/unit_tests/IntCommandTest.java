@@ -4,6 +4,7 @@ import com.acme.edu.command.ByteCommand;
 import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
 import com.acme.edu.exceptions.LogException;
+import com.acme.edu.exceptions.SaveException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
@@ -145,6 +146,35 @@ public class IntCommandTest {
 
         //region then
         assertNotNull(sut.getMessageAsString());
+        //endregion
+    }
+
+    @Test(expected = SaveException.class)
+    public void shouldThrowSaveExceptionWhenSaverIsNull() throws SaveException {
+        //region given
+        IntCommand stub = new IntCommand(5);
+        //endregion
+
+        //region when
+        stub.saveCommand(null);
+        //endregion
+    }
+
+    @Test
+    public void shouldGetMesagesSumWhenAddNewIntCommandWithoutOverflow() throws LogException {
+        //region given
+        IntCommand sut = new IntCommand(4);
+        IntCommand stub = new IntCommand(5);
+        int previousMessage = sut.getMessage();
+        int currentMessage = stub.getMessage();
+        //endregion
+
+        //region when
+        sut.accumulate(stub);
+        //endregion
+
+        //region then
+        assertEquals(previousMessage + currentMessage, sut.getMessage());
         //endregion
     }
 }
