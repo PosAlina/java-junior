@@ -1,8 +1,8 @@
 package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.ByteCommand;
-import com.acme.edu.command.Command;
 import com.acme.edu.command.IntCommand;
+import com.acme.edu.command.Command;
 import com.acme.edu.exceptions.LogException;
 import com.acme.edu.exceptions.SaveException;
 import com.acme.edu.saver.Saver;
@@ -17,7 +17,7 @@ public class IntCommandTest {
     @Test
     public void shouldSetFlagToBeSavedWhenAccumulatedWithNotIntCommand() {
         //region given
-        IntCommand sut = new IntCommand(5);
+        IntCommand sut = new IntCommand(Integer.MAX_VALUE);
         Command stub = new ByteCommand((byte) 0);
         //endregion
 
@@ -100,7 +100,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldSetNegativeFlagsWhenSaveCommandWithPositiveFlags() throws LogException {
+    public void shouldSetNegativeFlagsWhenSaveIntCommandWithPositiveFlags() throws LogException {
         //region given
         IntCommand sut = new IntCommand(Integer.MAX_VALUE);
         IntCommand stub = new IntCommand(5);
@@ -119,7 +119,7 @@ public class IntCommandTest {
     }
 
     @Test
-    public void shouldNotDecorateMessageWhenIntSaveCommandWithNegativeFlags() throws LogException {
+    public void shouldNotDecorateMessageWhenSaveIntCommandWithNegativeFlags() throws LogException {
         //region given
         IntCommand sut = new IntCommand(5);
         //endregion

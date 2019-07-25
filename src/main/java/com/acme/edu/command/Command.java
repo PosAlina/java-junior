@@ -45,7 +45,7 @@ public class Command {
         try {
             saveCommand(saver);
         } catch (SaveException e) {
-            throw new LogException(e.getMessage());
+            throw new LogException(e);
         }
     }
 

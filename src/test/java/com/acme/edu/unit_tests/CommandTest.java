@@ -47,6 +47,7 @@ public class CommandTest {
         //endregion
 
         //region when
+//        sut.accumulate(stub);
         sut.process(stub, saver);
         //endregion
 

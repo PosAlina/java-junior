@@ -62,4 +62,8 @@ public class Logger {
     public static void flush() throws LogException {
         logController.flush();
     }
+
+    public static void close() throws LogException {
+        logController.close();
+    }
 }

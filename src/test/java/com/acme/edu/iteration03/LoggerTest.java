@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.acme.edu.Logger.flush;
 
 public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //region given
@@ -30,9 +29,9 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     public void shouldLogIntegersArray() throws IOException, LogException {
         //region when
         Logger.log(new int[]{-1, 0, 1});
-        flush();
+        Logger.flush();
         Logger.log(new int[]{});
-        flush();
+        Logger.close();
         //endregion
 
         //region then
@@ -45,9 +44,9 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     public void shouldLogIntegersMatrix() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(new int[][]{{-1, 0, 1}, {1, 2, 3}, {-1, -2, -3}});
-        flush();
+        Logger.flush();
         Logger.log(new int[][]{});
-        flush();
+        Logger.close();
         //endregion
 
         //region then
@@ -63,7 +62,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     public void shouldLogIntegersMulitidimentionalArray() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(new int[][][][]{{{{2}, {1, 4}}}});
-        flush();
+        Logger.close();
         //endregion
 
         //region then
@@ -77,7 +76,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     public void shouldLogStringsWithOneMethodCall() throws IOException, SaveException, FlushException {
         //region when
         Logger.log("str1", "string 2", "str 3");
-        flush();
+        Logger.close();
         //endregion
 
         //region then
@@ -92,7 +91,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     public void shouldLogIntegersWithOneMethodCall() throws IOException, SaveException, FlushException {
         //region when
         Logger.log(-1, 0, 1, 3);
-        flush();
+        Logger.close();
         //endregion
 
         //region then
@@ -107,7 +106,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str");
         Logger.log(Integer.MAX_VALUE - 10);
         Logger.log(11);
-        Logger.flush();
+        Logger.close();
         //endregion
 
         //region then

@@ -3,6 +3,8 @@ package com.acme.edu;
 import com.acme.edu.command.Command;
 import com.acme.edu.exceptions.FlushException;
 import com.acme.edu.exceptions.LogException;
+import com.acme.edu.exceptions.SaveException;
+import com.acme.edu.saver.FileSaver;
 import com.acme.edu.saver.Saver;
 
 public class LogController {
@@ -46,9 +48,21 @@ public class LogController {
             if (!hasCommand()) {
                 throw new FlushException("No command for output");
             }
+        } catch(FlushException e) {
+            throw new LogException(e);
         }
-        catch(FlushException e) {
-            throw new LogException(e.getMessage());
+    }
+
+    public void close() throws LogException {
+        try {
+            if (hasCommand()) {
+                flush();
+            }
+            if (saver instanceof FileSaver) {
+                ((FileSaver) saver).closeFile();
+            }
+        } catch(SaveException e) {
+            throw new LogException(e);
         }
     }
 }
