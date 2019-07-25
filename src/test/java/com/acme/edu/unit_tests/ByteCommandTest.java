@@ -177,4 +177,22 @@ public class ByteCommandTest {
         assertEquals(previousMessage + currentMessage, sut.getMessage());
         //endregion
     }
+
+    @Test
+    public void shouldWriteOverflowIntoMessageWhenUpdatingByteCommand() throws LogException {
+        //region given
+        ByteCommand sut = new ByteCommand(Byte.MAX_VALUE);
+        ByteCommand stub = new ByteCommand((byte) 5);
+        sut.accumulate(stub);
+        int overflow = stub.getMessage();
+        //endregion
+
+        //region when
+        sut.update();
+        //endregion
+
+        //region then
+        assertEquals(overflow, sut.getMessage());
+        //endregion
+    }
 }

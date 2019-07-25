@@ -2,11 +2,13 @@ package com.acme.edu.unit_tests;
 
 import com.acme.edu.LogController;
 import com.acme.edu.command.Command;
+import com.acme.edu.command.IntCommand;
 import com.acme.edu.exceptions.LogException;
 import com.acme.edu.saver.Saver;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

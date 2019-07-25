@@ -45,7 +45,7 @@ public class ByteCommand extends Command {
         return overflowRest;
     }
 
-    private void update() {
+    public void update() {
         if (!isToFixOverflow) { return; }
         updateMessage(overflowRest);
         overflowRest = 0;

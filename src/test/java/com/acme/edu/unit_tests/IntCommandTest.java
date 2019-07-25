@@ -177,4 +177,22 @@ public class IntCommandTest {
         assertEquals(previousMessage + currentMessage, sut.getMessage());
         //endregion
     }
+
+    @Test
+    public void shouldWriteOverflowIntoMessageWhenUpdatingIntCommand() throws LogException {
+        //region given
+        IntCommand sut = new IntCommand(Integer.MAX_VALUE);
+        IntCommand stub = new IntCommand(5);
+        sut.accumulate(stub);
+        int overflow = stub.getMessage();
+        //endregion
+
+        //region when
+        sut.update();
+        //endregion
+
+        //region then
+        assertEquals(overflow, sut.getMessage());
+        //endregion
+    }
 }
