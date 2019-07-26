@@ -3,6 +3,7 @@ package com.acme.edu.network.server;
 import com.acme.edu.LogController;
 import com.acme.edu.command.*;
 import com.acme.edu.exceptions.IncorrectMessageException;
+import com.acme.edu.exceptions.LogClientProxyException;
 import com.acme.edu.exceptions.LogException;
 import com.acme.edu.saver.ConsoleSaver;
 
@@ -10,38 +11,42 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class LogServerProxy {/*
-    private static LogController logController = new LogController(new ConsoleSaver());
-
+public class LogServerProxy {
     public static void main(String[] args) throws LogException {
+        LogController logController = new LogController(new ConsoleSaver());
         try (final ServerSocket serverSocket = new ServerSocket(666)) {
             while (true) {
+                boolean closed = false;
                 Socket client = serverSocket.accept();
                 try (BufferedReader in =
                              new BufferedReader(
                                      new InputStreamReader(
                                              new BufferedInputStream(
                                                      client.getInputStream())));
-                     final BufferedWriter out =
+                     BufferedWriter out =
                              new BufferedWriter(
                                      new OutputStreamWriter(
                                              new BufferedOutputStream(
                                                      client.getOutputStream())))) {
-                    String message = in.readLine();
-                    if ("flush".equals(message)) {
-                        logController.flush();
-                    } else if ("close".equals(message)) {
-                        logController.close();
-                    } else {
-                        Command command = parseCommand(message);
-                        logController.log(command);
+                    while (!closed) {
+                        String message = in.readLine();
+                        if ("flush".equals(message)) {
+                            logController.flush();
+                        } else if ("close".equals(message)) {
+                            logController.close();
+                            closed = true;
+                        } else {
+                            Command command = parseCommand(message);
+                            logController.log(command);
+                        }
+                        out.write("Success!");
+                        out.newLine();
+                        out.flush();
                     }
-                    out.write("Success!");
-                    out.newLine();
-                    out.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                client.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,5 +75,5 @@ public class LogServerProxy {/*
             return new StringCommand(message);
         }
         throw new IncorrectMessageException("Incorrect command sent to server");
-    }*/
+    }
 }

@@ -51,6 +51,8 @@ public class LogController {
         } catch(FlushException e) {
             throw new LogException(e);
         }
+        accumulatedCommand.saveCommand(saver);
+        accumulatedCommand = null;
     }
 
     public void close() throws LogException {
