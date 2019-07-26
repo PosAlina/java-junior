@@ -13,6 +13,10 @@ public class ByteCommand extends Command {
         overflowRest = 0;
     }
 
+    public ByteCommand(String message) {
+        this(Byte.parseByte(message));
+    }
+
     @Override
     public void accumulate(Command currentCommand) {
         if (!isEqualTypes(currentCommand)) {

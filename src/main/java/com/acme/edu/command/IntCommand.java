@@ -13,6 +13,10 @@ public class IntCommand extends Command {
         overflowRest = 0;
     }
 
+    public IntCommand(String message) {
+        this(Integer.parseInt(message));
+    }
+
     @Override
     public void accumulate(Command currentCommand) {
         if (!isEqualTypes(currentCommand)) {

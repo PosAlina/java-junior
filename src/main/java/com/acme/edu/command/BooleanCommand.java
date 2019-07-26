@@ -8,6 +8,10 @@ public class BooleanCommand extends Command {
         prefix = "primitive: ";
     }
 
+    public BooleanCommand(String message) {
+        this(Boolean.parseBoolean(message));
+    }
+
     private void updateMessage(boolean message) {
         this.message = message;
         messageAsString = String.valueOf(message);
