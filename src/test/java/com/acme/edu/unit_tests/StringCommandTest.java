@@ -1,6 +1,7 @@
 package com.acme.edu.unit_tests;
 
 import com.acme.edu.command.Command;
+import com.acme.edu.command.IntCommand;
 import com.acme.edu.command.StringCommand;
 import org.junit.Test;
 
@@ -75,9 +76,9 @@ public class StringCommandTest {
         //region given
         StringCommand sut = new StringCommand("test string 1");
         int initialSutStringCounter = sut.getStringCounter();
-        Command stub = mock(Command.class);
-        when(stub instanceof StringCommand)
-                .thenReturn(false);
+        Command stub = mock(IntCommand.class);
+/*        when(stub instanceof StringCommand)
+                .thenReturn(false);*/
         //endregion
 
         //region when

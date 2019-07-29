@@ -48,7 +48,9 @@ public class FileSaver implements Saver {
 
     public void closeFile() throws SaveException {
         try {
-            output.close();
+            if (output != null) {
+                output.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new SaveException("Couldn't close file");

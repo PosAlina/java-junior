@@ -1,6 +1,5 @@
 package com.acme.edu.network.client;
 
-import com.acme.edu.command.*;
 import com.acme.edu.exceptions.LogClientProxyException;
 import com.acme.edu.exceptions.LogException;
 
@@ -8,14 +7,14 @@ import java.io.*;
 import java.net.Socket;
 
 public class LogClientProxy {
-    private boolean connectionOpen = false;
+    private boolean connectionOpen;
     private Socket server;
     private BufferedReader in;
     private BufferedWriter out;
 
     public LogClientProxy() throws LogClientProxyException {
+        connectionOpen = false;
         openConnection();
-        connectionOpen = true;
     }
 
     private void openConnection() throws LogClientProxyException {
@@ -37,7 +36,7 @@ public class LogClientProxy {
         }
     }
 
-    public void closeConnection() throws LogClientProxyException {
+    private void closeConnection() throws LogClientProxyException {
         if (!connectionOpen) return;
         try {
             out.close();
